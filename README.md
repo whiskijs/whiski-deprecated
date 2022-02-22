@@ -1,4 +1,4 @@
-<center><h2>whiski.js</h2>install web code like deno, github</center>
+<center><h2>whiski.js</h2>⚡ install web code fast and light</center>
 
 ---
 
