@@ -55,10 +55,11 @@ export default async function Compile(code: string, id: string, opts: InstallOpt
       return code;
     });
   } catch (e) {
-    console.log(e.message);
-    outputFile(join(process.cwd(), './.whiski/.errors', RandomString()), `/* ${id} */\n${code}`);
-    return code;
+    const cd = RandomString();
+    console.log(`${'warn'.yellow} couldn't parse code. see code: ./.whiski/.errors/${cd}`);
+    outputFile(join(process.cwd(), './.whiski/', cd), `/* ${id} */\n${code}`);
   }
+  return code;
 }
 
 export function init() {
