@@ -1,5 +1,8 @@
 export interface InstallOptions {
-  plugins: any[];
+  plugins?: any[];
+  extension?: string;
+  debug?: boolean;
+  dist?: string;
 }
 export interface Plugin {
   name?: string;
