@@ -27,5 +27,8 @@ module.exports = {
     'no-useless-constructor': 'off',
     'max-classes-per-file': 'off',
     'no-param-reassign': 'off',
+
+    'max-len': 'off',
+    'no-new': 'off',
   },
 };
