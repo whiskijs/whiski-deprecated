@@ -1,6 +1,9 @@
 declare module 'whiskijs' {
   export interface InstallOptions {
-    plugins: any[];
+    plugins?: any[];
+    extension?: string;
+    debug?: boolean;
+    dist?: string;
   }
   export interface Plugin {
     name?: string;
@@ -10,4 +13,5 @@ declare module 'whiskijs' {
   }
 
   export default function InstallModule(url: string, options?: InstallOptions): Promise<void>;
+  export function refresh(): void;
 }
