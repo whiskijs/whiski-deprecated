@@ -1,4 +1,4 @@
-<center><h2>whiski.js</h2>⚡ install web code fast and light</center>
+<p align="center"><h2>whiski.js</h2>⚡ install web code fast and light</p>
 
 ---
 
