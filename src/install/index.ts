@@ -4,6 +4,7 @@ import { outputFileSync } from 'fs-extra';
 import path, { join } from 'path';
 import { InstallOptions, Plugin } from '../types/options';
 import Compile, { getModules, init } from '../compiler/compile';
+import normalizeUrl from '../../lib/normalize';
 
 let history = [];
 
@@ -26,7 +27,7 @@ export default async function InstallModule(url: string, options?: InstallOption
     const code = await response.text();
     outputFileSync(join(process.cwd(), `./.whiski/${new URL(url).pathname}`), code);
     console.log(
-      `${'success'.green.bold} install ${url.bold} - ${((performance.now() - start) / 100).toFixed(2)}s${
+      `${'success'.green.bold} install ${normalizeUrl(url).bold} - ${((performance.now() - start) / 100).toFixed(2)}s${
         getModules().length === 0 ? '' : `\n└─ failed Modules: ${getModules().join(', ')}`.red.bold
       }`
     );
@@ -35,7 +36,7 @@ export default async function InstallModule(url: string, options?: InstallOption
     await InstallModule(`${parsed.dir}/${parsed.name}/index.${options.extension}`, options);
     history.push(`${parsed.dir}/${parsed.name}/index.${options.extension}`);
   } else if (!history.includes(url)) {
-    console.log(`${'failed'.red.bold} install ${url.bold}`);
+    console.log(`${'failed'.red.bold} install ${normalizeUrl(url).bold}`);
   }
 }
 
