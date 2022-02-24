@@ -1,4 +1,4 @@
-declare module 'whiskijs' {
+declare module 'whiski' {
   export interface InstallOptions {
     plugins?: any[];
     extension?: string;
