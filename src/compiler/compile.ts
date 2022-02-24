@@ -18,7 +18,7 @@ export default async function Compile(code: string, id: string, opts: InstallOpt
   });
 
   try {
-    const ast = babel.parse(code, { sourceType: 'module', plugins: ['typescript'] });
+    const ast = babel.parse(code, { sourceType: 'module', plugins: ['typescript', 'jsx'] });
     let replaced = 0;
     await ast.program.body.forEach(async (spec: any) => {
       if (spec.type === 'ImportDeclaration' || spec.type === 'ExportNamedDeclaration' || spec.type === 'ExportAllDeclaration') {
