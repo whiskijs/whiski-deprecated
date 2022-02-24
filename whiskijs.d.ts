@@ -3,7 +3,8 @@ declare module 'whiskijs' {
     plugins?: any[];
     extension?: string;
     debug?: boolean;
-    dist?: string;
+    // dist?: string; // TODO: add dist option
+    log?: boolean;
   }
   export interface Plugin {
     name?: string;
@@ -12,6 +13,8 @@ declare module 'whiskijs' {
     transformImportUrl?: (url: string) => string | Promise<string>;
   }
 
-  export default function InstallModule(url: string, options?: InstallOptions): Promise<void>;
+  export function install(url: string, options?: InstallOptions): Promise<void>;
   export function refresh(): void;
+
+  export function Compile(code: string, url: string, options?: InstallOptions): Promise<{ code: string; modules: string[] }>;
 }
