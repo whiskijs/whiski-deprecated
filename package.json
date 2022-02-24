@@ -1,5 +1,5 @@
 {
-  "name": "whiski-repo",
+  "name": "whiski",
   "version": "1.1.11",
   "description": "install web code fast and light",
   "repository": {
@@ -40,5 +40,6 @@
     "colors": "^1.4.0",
     "fs-extra": "^10.0.0",
     "node-fetch": "2"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }
