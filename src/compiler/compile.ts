@@ -1,38 +1,39 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable global-require */
-import * as acorn from 'acorn';
+import * as babel from '@babel/parser';
 import { outputFile } from 'fs-extra';
 import path, { join, normalize } from 'path';
+import normalizeUrl from '../../lib/normalize';
 import RandomString from '../../lib/randomString';
-import install from '../install';
+import { install } from '../install';
 import { InstallOptions, Plugin } from '../types/options';
 
-let modules = [];
+export default async function Compile(code: string, id: string, opts: InstallOptions): Promise<{ code: string; modules: string[] }> {
+  const modules = [];
 
-export default async function Compile(code: string, id: string, opts: InstallOptions): Promise<string> {
   await opts.plugins.forEach(async (plugin: Plugin) => {
     if (plugin.resolveConfig) plugin.resolveConfig(opts);
     if (plugin.transform) code = await plugin.transform(id, code);
   });
 
   try {
-    const parser = acorn.Parser.extend(require('acorn-class-fields')).extend(require('acorn-private-methods'));
-    const ast = parser.parse(code, {
-      ecmaVersion: 2020,
-      sourceType: 'module',
-      allowHashBang: true,
-    });
+    const ast = babel.parse(code, { sourceType: 'module', plugins: ['typescript'] });
     let replaced = 0;
-    await (ast as any).body.forEach(async (spec: any) => {
-      if (spec.type === 'ImportDeclaration') {
+    await ast.program.body.forEach(async (spec: any) => {
+      if (spec.type === 'ImportDeclaration' || spec.type === 'ExportNamedDeclaration' || spec.type === 'ExportAllDeclaration') {
+        if (!spec.source) return;
+
+        let isUrl = false;
         let replacement = spec.source.value;
-        const rep = replacement.replace(/[\\]/g, '/');
+        const rep = normalizeUrl(replacement);
+
         if (!rep.startsWith('./') && !rep.startsWith('../')) {
           modules.push(rep);
           return;
         }
-        let isUrl = false;
 
+        // check url
         try {
           new URL(replacement);
           isUrl = true;
@@ -47,6 +48,7 @@ export default async function Compile(code: string, id: string, opts: InstallOpt
         if (!(replacement as string).split('\\').pop().includes('.')) {
           replacement = `${replacement}${path.extname(id)}`;
         }
+
         await install(replacement, opts);
 
         code = code.substring(0, spec.source.start + 1 + replaced) + replacement + code.substring(spec.source.end - 1 + replaced);
@@ -59,12 +61,5 @@ export default async function Compile(code: string, id: string, opts: InstallOpt
     console.log(`${'warn'.yellow} couldn't parse code. see code: ./.whiski/.errors/${cd}`);
     outputFile(join(process.cwd(), './.whiski/', cd), `/* ${id} */\n${code}`);
   }
-  return code;
-}
-
-export function init() {
-  modules = [];
-}
-export function getModules() {
-  return modules;
+  return { code, modules };
 }
