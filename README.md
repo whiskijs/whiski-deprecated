@@ -1,27 +1,24 @@
-# <p align="center">whiski.js</p>
+# whiski.js
 
-<p align="center">⚡ install web code fast and light</p>
+⚡ install web code fast and light
 
 ---
 
 ```bash
-$npm install whiskijs
-$yarn add whiskijs
+$npm install whiski
+$yarn add whiski
 ```
 
 ## Useage
 
 ```js
-const whiski = require('whiskijs');
-whiski.default('https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js');
+const whiski = require('whiski');
+whiski.install('https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js');
 ```
 
-### Download Typescript Code
-
-use [`@whiski/plugin-typescript`](https://www.npmjs.com/package/@whiski/plugin-typescript) to download typescript code.
+### Install Typescript Code
 
 ```js
-const whiski = require('whiskijs');
-const typescript = require('@whiski/plugin-typescript');
-whiski.default('{TSCODE_URL}', { plugins: [typescript.default()], extension: 'ts' });
+/* ... */
+whiski.install('URL', { extension: 'ts' });
 ```
