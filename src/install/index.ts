@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 import * as fetch from 'node-fetch';
 import 'colors';
 import { outputFileSync } from 'fs-extra';
@@ -25,10 +26,10 @@ export async function install(url: string, options?: InstallOptions): Promise<vo
     if (plugin.transformImportUrl) url = await plugin.transformImportUrl(url);
   });
 
-  if (options.debug) console.log(`${'info'.blue} fetching ${url}`);
-
   const parsed = path.parse(url);
   const response = await fetch.default(url);
+
+  if (options.debug) console.log(`${'info'.blue} fetching ${url}... ${response.status.toString().green}`);
 
   if (response.status === 200) {
     history.push(url);
@@ -45,6 +46,8 @@ export async function install(url: string, options?: InstallOptions): Promise<vo
         }`
       );
     }
+  } else if (url.endsWith(`index.${options.extension}`)) {
+    return;
   } else if (!history.includes(`${parsed.dir}/${parsed.name}/index.${options.extension}`)) {
     await install(`${parsed.dir}/${parsed.name}/index.${options.extension}`, options);
     history.push(`${parsed.dir}/${parsed.name}/index.${options.extension}`);
