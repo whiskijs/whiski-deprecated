@@ -22,3 +22,12 @@ whiski.install('https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js');
 /* ... */
 whiski.install('URL', { extension: 'ts' });
 ```
+
+### Install Github, Deno Code
+
+use [`@whiski/kit`](https://npmjs.com/package/@whiski/kit)
+
+```bash
+$ npm install @whiski/kit
+$ yarn add @whiski/kit
+```
