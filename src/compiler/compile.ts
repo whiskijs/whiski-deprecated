@@ -58,8 +58,8 @@ export default async function Compile(code: string, id: string, opts: InstallOpt
     });
   } catch (e) {
     const cd = RandomString();
-    console.log(`${'warn'.yellow} couldn't parse code. see code: ./.whiski/.errors/${cd}`);
-    outputFile(join(process.cwd(), './.whiski/.errors/', cd), `/* ${id} */\n${code}`);
+    console.log(`${'warn'.yellow} couldn't parse code. see code: ./${opts.outDir}/.errors/${cd}`);
+    outputFile(join(process.cwd(), `./${opts.outDir}/.errors/`, cd), `/* ${id} */\n${code}`);
   }
   return { code, modules };
 }

@@ -16,6 +16,7 @@ export async function install(url: string, options?: InstallOptions): Promise<vo
     extension: 'js',
     plugins: [],
     debug: false,
+    outDir: '.whiski',
     log: true,
     ...options,
   };
@@ -37,7 +38,7 @@ export async function install(url: string, options?: InstallOptions): Promise<vo
     const code = await response.text();
     const { modules } = await Compile(code, url, options);
 
-    outputFileSync(join(process.cwd(), `./.whiski/${new URL(url).pathname}`), code);
+    outputFileSync(join(process.cwd(), `./${options.outDir}/${new URL(url).pathname}`), code);
 
     if (options.log) {
       console.log(
@@ -54,6 +55,8 @@ export async function install(url: string, options?: InstallOptions): Promise<vo
   } else if (!history.includes(url)) {
     if (options.log) console.log(`${'failed'.red.bold} install ${normalizeUrl(url).bold}`);
   }
+
+  return;
 }
 
 export function refresh() {
