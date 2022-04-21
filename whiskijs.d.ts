@@ -3,7 +3,7 @@ declare module 'whiski' {
     plugins?: any[];
     extension?: string;
     debug?: boolean;
-    // dist?: string; // TODO: add dist option
+    outDir?: string;
     log?: boolean;
   }
   export interface Plugin {
