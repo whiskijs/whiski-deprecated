@@ -1,0 +1,21 @@
+{
+  "name": "@whiski/cli",
+  "version": "1.0.2",
+  "description": "install web code fast and light",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whiskijs/whiski.js"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "bin": {
+    "whiskir": "./index.js"
+  },
+  "author": "r.ehdals <57896501+kangdongmandoo@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "whiski": "1.1.16"
+  }
+}
