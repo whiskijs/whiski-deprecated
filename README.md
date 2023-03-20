@@ -9,7 +9,7 @@ $npm install whiski
 $yarn add whiski
 ```
 
-## Useage
+## Usage
 
 ```js
 const whiski = require('whiski');
